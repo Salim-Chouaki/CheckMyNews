@@ -9,7 +9,7 @@ Our monitoring tool works silently in the background while you are browsing Face
 
 ## Installation
 
-The project is available as a [Google Chrome Extension](https://chrome.google.com/webstore/detail/social-media-monitorstud/kholbekkejbhnccjnckjnmjolngcghif/related?hl=fr&authuser=2)
+The project is available as a [Google Chrome Extension](https://chrome.google.com/webstore/detail/checkmynews/lppioklandnfafbgedffnihjhnmgjbdn?hl=fr&authuser=3)
 
 You can install the extension from the source code, by loading it as an unpacked extension, but we recommend that you don't, in order not to miss the auto-updates.
 
