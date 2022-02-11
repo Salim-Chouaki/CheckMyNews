@@ -87,7 +87,6 @@ function getResourcesFromExplanationNewInterface(sr_revision_id) {
     let resourceMapPost = html_page.indexOf(sr_revision_id.toString()+'},"rsrcMap"');
 
     while (resourceMapPost !== - 1) {
-        alert("inside loop");
         let resources = findNextJSONObject(html_page, resourceMapPost + html_page.substring(resourceMapPost).indexOf("rsrcMap"))
         for (let property in resources){
             if (resources[property]['type']!=='js') {
@@ -95,7 +94,6 @@ function getResourcesFromExplanationNewInterface(sr_revision_id) {
             }
             jsResources.push(resources[property]['src']);
         }
-        alert(jsResources.length);
 
         resourceMapPost = html_page.indexOf(sr_revision_id.toString()+'},"rsrcMap"', resourceMapPost + 1);
 
@@ -188,7 +186,6 @@ function getDocIdFromWaistResources(jsResources,callback, module) {
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200){
             if (xmlhttp.responseText.indexOf(module)!==-1) {
                 docId = captureErrorOverload(getDocIdFromWaistResource,[xmlhttp.responseText, module],undefined);
-                alert("fouuund");
                 if ((docId)) {
                     callback(docId);
                     return;

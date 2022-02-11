@@ -257,8 +257,6 @@ function openWindowToNewUsers(consentApiUrl,consentMode=0) {
  * @return {}
  */
 function replyOnSuccessInRegistration(consents,sendResponse) {
-    alert("sending response");
-    alert(JSON.stringify(consents));
     if (sendResponse) {
         sendResponse({"ok":true,"consents":consents, "currentUser" :  sha512(String(CURRENT_USER_ID))});
         consentRequestedTime = null;
@@ -302,8 +300,6 @@ function registerConsent(registerConsentApiUrl,sendResponse=undefined,countEffor
         dataType: "json",
         traditional: true,
         success: function (resp) {
-            alert(JSON.stringify(resp));
-            // TODO: maybe send back the user_id for conf
             if (isCurrentUser()!==true) {
                 replyOnFailureInRegistration("User currently not logged-in",sendResponse);
             }

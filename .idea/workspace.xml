@@ -10,7 +10,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f56f116-f20a-429d-a813-19903f5dedd8" name="Default Changelist" comment="Creating readme" />
+    <list default="true" id="8f56f116-f20a-429d-a813-19903f5dedd8" name="Default Changelist" comment="Creating readme">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/explanationCrawl.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/explanationCrawl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/background/consent.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/background/consent.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +55,7 @@
       <workItem from="1643738239910" duration="1547000" />
       <workItem from="1644175196614" duration="1650000" />
       <workItem from="1644504532365" duration="1228000" />
+      <workItem from="1644586830202" duration="109000" />
     </task>
     <task id="LOCAL-00001" summary="Creating readme">
       <created>1643739021575</created>
@@ -89,5 +95,9 @@
       <screen x="0" y="25" width="1440" height="818" />
     </state>
     <state x="320" y="171" key="Vcs.Push.Dialog.v2/0.25.1440.818/1440.25.1920.1055@0.25.1440.818" timestamp="1643739030402" />
+    <state x="421" y="189" width="597" height="490" key="find.popup" timestamp="1644586931688">
+      <screen x="0" y="25" width="1440" height="818" />
+    </state>
+    <state x="421" y="189" width="597" height="490" key="find.popup/0.25.1440.818/1440.25.1920.1055@0.25.1440.818" timestamp="1644586931688" />
   </component>
 </project>
