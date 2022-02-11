@@ -49,7 +49,7 @@
       <updated>1643738238786</updated>
       <workItem from="1643738239910" duration="1547000" />
       <workItem from="1644175196614" duration="1650000" />
-      <workItem from="1644504532365" duration="1222000" />
+      <workItem from="1644504532365" duration="1228000" />
     </task>
     <task id="LOCAL-00001" summary="Creating readme">
       <created>1643739021575</created>
@@ -81,6 +81,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Creating readme" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="184" y="93" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1644586658138">
+      <screen x="0" y="25" width="1440" height="818" />
+    </state>
+    <state x="184" y="93" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.818/1440.25.1920.1055@0.25.1440.818" timestamp="1644586658138" />
     <state x="320" y="171" key="Vcs.Push.Dialog.v2" timestamp="1643739030402">
       <screen x="0" y="25" width="1440" height="818" />
     </state>
