@@ -10,12 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f56f116-f20a-429d-a813-19903f5dedd8" name="Default Changelist" comment="Creating readme">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/injections/explanationCrawl.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/explanationCrawl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/background/consent.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/background/consent.js" afterDir="false" />
-    </list>
+    <list default="true" id="8f56f116-f20a-429d-a813-19903f5dedd8" name="Default Changelist" comment="Creating readme" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +50,7 @@
       <workItem from="1643738239910" duration="1547000" />
       <workItem from="1644175196614" duration="1650000" />
       <workItem from="1644504532365" duration="1228000" />
-      <workItem from="1644586830202" duration="109000" />
+      <workItem from="1644586830202" duration="402000" />
     </task>
     <task id="LOCAL-00001" summary="Creating readme">
       <created>1643739021575</created>
