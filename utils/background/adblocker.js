@@ -78,7 +78,7 @@ function processTabsForAdBlocker(tabs) {
         return
     }
 
-    var tab = tabs[0];
+    let tab = tabs[0];
     chrome.tabs.sendMessage(tab.id, {type:"isValidTab"},function(response) {
 
         if (response===undefined) {

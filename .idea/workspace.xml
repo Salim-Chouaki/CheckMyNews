@@ -10,11 +10,78 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f56f116-f20a-429d-a813-19903f5dedd8" name="Default Changelist" comment="Creating readme" />
+    <list default="true" id="8f56f116-f20a-429d-a813-19903f5dedd8" name="Default Changelist" comment="Creating readme">
+      <change afterPath="$PROJECT_DIR$/_locales/pt_BR/messages.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_locales/pt_PT/messages.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/localize.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/ad_detection/ads_detection.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/ad_detection/ads_detection_new_interface.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/ad_detection/general.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/general.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/general_new_interface.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/general_old_interface.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/posts_detection/general.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/posts_detection/posts_detection_new_interface.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/browser_detection.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/content-scripts/universal_methods.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_locales/en/messages.json" beforeDir="false" afterPath="$PROJECT_DIR$/_locales/en/messages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_locales/pt/messages.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/background.js" beforeDir="false" afterPath="$PROJECT_DIR$/background.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-scripts/adgrabber.js" beforeDir="false" afterPath="$PROJECT_DIR$/content-scripts/adgrabber.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-scripts/preferencesGrabber.js" beforeDir="false" afterPath="$PROJECT_DIR$/content-scripts/preferences_grabber.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-scripts/universal.js" beforeDir="false" afterPath="$PROJECT_DIR$/content-scripts/universal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/adActivityCrawl.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/ad_activity_crawl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/adBlockDetection.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/ad_block_detection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/adsNewInterface.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/ads_new_interface.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/errorHandling.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/error_handling.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/explanationCrawl.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/explanation_crawl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/preferenceCrawl.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/preference_crawl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/universal.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/universal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/xhrOverloadButtons.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/xhr_overload_buttons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injections/xhrOverloadPreferences.js" beforeDir="false" afterPath="$PROJECT_DIR$/injections/xhr_overload_preferences.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/new_consent.html" beforeDir="false" afterPath="$PROJECT_DIR$/ui/new_consent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/new_consent.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/new_consent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/not_logged.html" beforeDir="false" afterPath="$PROJECT_DIR$/ui/not_logged.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/popup.html" beforeDir="false" afterPath="$PROJECT_DIR$/ui/popup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/popup.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/popup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/background/adblocker.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/background/adblocker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/background/consent.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/background/consent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/background/explanationCrawl.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/background/explanation_crawl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/background/general.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/background/general.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/background/news_organisation_sites.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/background/news_organisation_sites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/background/preferenceCrawl.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/background/preference_crawl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/anyAdCollection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/browserDetection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/dialogCaptcha.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/content-scripts/dialog_captcha.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/feedAdCollection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/feedAdCollectionNewInterface.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/mouse_tracking/general.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/content-scripts/mouse_tracking/general.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/mouse_tracking/mouse_tracking.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/content-scripts/mouse_tracking/mouse_tracking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/mouse_tracking/mouse_tracking_new_interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/content-scripts/mouse_tracking/mouse_tracking_new_interface.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/posts_detection/general.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/posts_detection/post_detection_new_interface.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/posts_detection/posts_detection.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection/posts_detection/posts_detection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/sideAdsCollection.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/content-scripts/sideads_detection/sideads_detection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/content-scripts/universalMethods.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/errorHandling.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/error_handling.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/globalParams.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/global_params.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/interfaceVersionDetection.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/interface_version_detection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/userIdentification.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/user_identification.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Pull.Settings">
     <option name="BRANCH" value="main" />
@@ -28,6 +95,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -35,8 +103,17 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/_locales" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/utils/content-scripts/ads_and_posts_detection" />
+      <recent name="$PROJECT_DIR$/utils/content-scripts/sideads_detection" />
+      <recent name="$PROJECT_DIR$/utils/content-scripts/ad_detection" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/_locales/fr" />
+      <recent name="$PROJECT_DIR$/_locales" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -50,7 +127,33 @@
       <workItem from="1643738239910" duration="1547000" />
       <workItem from="1644175196614" duration="1650000" />
       <workItem from="1644504532365" duration="1228000" />
-      <workItem from="1644586830202" duration="402000" />
+      <workItem from="1644586830202" duration="1039000" />
+      <workItem from="1645031662951" duration="1617000" />
+      <workItem from="1645440479972" duration="9627000" />
+      <workItem from="1645521635095" duration="6249000" />
+      <workItem from="1645609587372" duration="1687000" />
+      <workItem from="1645975540820" duration="5253000" />
+      <workItem from="1647439910025" duration="416000" />
+      <workItem from="1647511616651" duration="2361000" />
+      <workItem from="1647859715719" duration="355000" />
+      <workItem from="1647902136457" duration="3162000" />
+      <workItem from="1648221078096" duration="558000" />
+      <workItem from="1648475881467" duration="2626000" />
+      <workItem from="1649083339526" duration="1827000" />
+      <workItem from="1649752368788" duration="671000" />
+      <workItem from="1650278215371" duration="13065000" />
+      <workItem from="1650886582943" duration="5774000" />
+      <workItem from="1651397533716" duration="1017000" />
+      <workItem from="1651573252691" duration="72000" />
+      <workItem from="1652453886929" duration="398000" />
+      <workItem from="1653313893127" duration="5584000" />
+      <workItem from="1653393621659" duration="2723000" />
+      <workItem from="1654009763835" duration="16488000" />
+      <workItem from="1654327994720" duration="242000" />
+      <workItem from="1654514895117" duration="10677000" />
+      <workItem from="1654551311954" duration="115409000" />
+      <workItem from="1655479859870" duration="9480000" />
+      <workItem from="1656412058366" duration="1835000" />
     </task>
     <task id="LOCAL-00001" summary="Creating readme">
       <created>1643739021575</created>
@@ -82,17 +185,54 @@
     <option name="LAST_COMMIT_MESSAGE" value="Creating readme" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="93" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1644586658138">
-      <screen x="0" y="25" width="1440" height="818" />
+    <state x="1685" y="108" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1654766468183">
+      <screen x="1440" y="25" width="1920" height="994" />
     </state>
-    <state x="184" y="93" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.818/1440.25.1920.1055@0.25.1440.818" timestamp="1644586658138" />
-    <state x="320" y="171" key="Vcs.Push.Dialog.v2" timestamp="1643739030402">
-      <screen x="0" y="25" width="1440" height="818" />
+    <state x="184" y="93" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.814/1440.25.1920.1055@0.25.1440.814" timestamp="1654520471556" />
+    <state x="1685" y="113" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.814/1440.25.1920.1055@1440.25.1920.1055" timestamp="1654610150016" />
+    <state x="1685" y="108" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.814/1440.25.1920.994@1440.25.1920.994" timestamp="1654766468183" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1654515147359">
+      <screen x="0" y="25" width="1440" height="814" />
     </state>
-    <state x="320" y="171" key="Vcs.Push.Dialog.v2/0.25.1440.818/1440.25.1920.1055@0.25.1440.818" timestamp="1643739030402" />
-    <state x="421" y="189" width="597" height="490" key="find.popup" timestamp="1644586931688">
-      <screen x="0" y="25" width="1440" height="818" />
+    <state width="500" height="445" key="SwitcherDM/0.25.1440.814/1440.25.1920.1055@0.25.1440.814" timestamp="1654515147359" />
+    <state x="2019" y="136" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1655052516153">
+      <screen x="1440" y="25" width="1920" height="1055" />
     </state>
-    <state x="421" y="189" width="597" height="490" key="find.popup/0.25.1440.818/1440.25.1920.1055@0.25.1440.818" timestamp="1644586931688" />
+    <state x="2019" y="136" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.25.1440.814/1440.25.1920.1055@1440.25.1920.1055" timestamp="1655052516153" />
+    <state x="2206" y="440" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1654779272872">
+      <screen x="1440" y="25" width="1920" height="994" />
+    </state>
+    <state x="2206" y="440" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1440.814/1440.25.1920.994@1440.25.1920.994" timestamp="1654779272872" />
+    <state x="1440" y="25" width="1544" height="1036" key="dock-window-1" timestamp="1654604167130">
+      <screen x="1440" y="25" width="1920" height="1055" />
+    </state>
+    <state x="1440" y="25" width="1544" height="1036" key="dock-window-1/0.25.1440.814/1440.25.1920.1055@1440.25.1920.1055" timestamp="1654604167130" />
+    <state x="2000" y="231" width="796" height="714" key="find.popup" timestamp="1655718934680">
+      <screen x="1440" y="25" width="1920" height="1055" />
+    </state>
+    <state x="420" y="176" width="597" height="573" key="find.popup/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1647859757503" />
+    <state x="420" y="176" width="597" height="573" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1647440021492" />
+    <state x="420" y="183" width="656" height="580" key="find.popup/0.25.1440.814/1440.25.1920.1055@0.25.1440.814" timestamp="1654532787217" />
+    <state x="2000" y="231" width="796" height="714" key="find.popup/0.25.1440.814/1440.25.1920.1055@1440.25.1920.1055" timestamp="1655718934680" />
+    <state x="420" y="184" width="597" height="550" key="find.popup/0.25.1440.814/1440.25.1920.994@0.25.1440.814" timestamp="1654085568555" />
+    <state x="2000" y="219" width="796" height="672" key="find.popup/0.25.1440.814/1440.25.1920.994@1440.25.1920.994" timestamp="1654781945469" />
+    <state x="420" y="184" width="597" height="518" key="find.popup/0.25.1440.814@0.25.1440.814" timestamp="1653398121033" />
+    <state x="2065" y="244" width="670" height="676" key="search.everywhere.popup" timestamp="1655487904349">
+      <screen x="1440" y="25" width="1920" height="1055" />
+    </state>
+    <state x="469" y="194" width="670" height="522" key="search.everywhere.popup/0.25.1440.814/1440.25.1920.1055@0.25.1440.814" timestamp="1654524577279" />
+    <state x="2065" y="244" width="670" height="676" key="search.everywhere.popup/0.25.1440.814/1440.25.1920.1055@1440.25.1920.1055" timestamp="1655487904349" />
+    <state x="2065" y="231" width="670" height="637" key="search.everywhere.popup/0.25.1440.814/1440.25.1920.994@1440.25.1920.994" timestamp="1654777022120" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/utils/background/explanation_crawl.js</url>
+          <line>754</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

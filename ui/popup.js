@@ -28,29 +28,16 @@ var CURRENT_USER_ID = "";
 
 $("#notLoggedInView").hide();
 
-// $.get(chrome.extension.getURL("/teste.html"), function(data) {
-//   $(data).appendTo("body");
-//   // Or if you're using jQuery 1.8+:
-//   // $($.parseHTML(data)).appendTo('body');
-// });
 
 var FIVE_SECONDS = 5000;
-var THIRTY_SECONDS = 6 * FIVE_SECONDS;
-
-var ANONYMIZATION_DATE = 1524175200;
 
 var VIEWS = [
-  "survey_all",
+  "survey_done",
   "rewards",
   "study_details",
   "contact_us",
   "general_statistics"
 ];
-
-// var consent= false;
-//if (!localStorage.collectPrefs) {
- // localStorage.collectPrefs = true;
-//}
 
 function __(i18n_key) {
   if (chrome) {
@@ -62,22 +49,12 @@ function __(i18n_key) {
 function getParameterByName(name, url) {
   if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+  let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
     results = regex.exec(url);
   if (!results) return null;
   if (!results[2]) return "";
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-
-/** Removing CollectPrefs Checkbox
-function getCollectPrefs() {
-  if (localStorage.collectPrefs == "true") {
-   // document.getElementById("collectPrefs").checked = true;
-    return;
-  }
-  document.getElementById("collectPrefs").checked = false;
-}
- **/
 
 function checkAdBlockerStatus() {
   if (localStorage.statusAdBlocker === "true") {
@@ -111,13 +88,7 @@ function getConsent() {
       setTimeout(getConsent, FIVE_SECONDS);
       return;
     }
-    /**
-    if (response.minTimestamp && response.minTimestamp < ANONYMIZATION_DATE) {
-      $("#consentData").html(
-        'The risk to you, as a participant, is minimal.  We are going to collect your Facebok id, the ads you receive, the explanations that Facebook provides to you, and periodically, your ad preferences page (<a href="https://www.facebook.com/ads/preferences">https://www.facebook.com/ads/preferences</a>). Moreover, we might target you with some ads, and consequently, collect their explanations.'
-      );
-    }
-     **/
+
     $("#notLoggedInView").hide();
     $("#consentForm").show();
     setTimeout(getConsent, FIVE_SECONDS);
@@ -125,8 +96,8 @@ function getConsent() {
 }
 
 function setHostName(currentUserId) {
-  for (var i = 0; i < VIEWS.length; i++) {
-    var elem = $("#" + VIEWS[i]);
+  for (let i = 0; i < VIEWS.length; i++) {
+    let elem = $("#" + VIEWS[i]);
     if (VIEWS[i] === 'home')
       elem.attr("href", HOST_SERVER);
     else
@@ -135,28 +106,18 @@ function setHostName(currentUserId) {
 }
 
 function sendConsent() {
-  chrome.runtime.sendMessage({ consent: true, setConsent: true }, function(
-    response
-  ) {
+  chrome.runtime.sendMessage({ consent: true, setConsent: true }, function(response) {
 
     if (response.ok) {
+
       if (response.consents[0]!==true) {
         return;
       }
+
       chrome.tabs.create({url: HOST_SERVER + VIEWS[0] + "?user=" + response.currentUser});
-/**
-      $("#notLoggedInView").hide();
-      $("#consentForm").hide();
-      $("#consentButton").remove();
-      $("#normalView").show();
-      consent = true;
-      setHostName(response.currentUser);
-      setBadge(true, response.currentUser);
- **/
-      return;
+       return;
     }
 
-    console.log("Consent failed");
     let errorMessage =
       '  <div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">×</a> <strong>Danger!</strong> Something went wrong! Please try again!</div>';
 
@@ -173,36 +134,23 @@ function openPrivacyPolicy() {
 }
 
 
-
-
-function i18nUpdates() {
-    $("#contact_us").html(__("menuContact"));
-    $("#view_search_ads").html(__("menuSearch"));
-    $("#view_all_ads").html(__("menuAds"));
-    $("#view_advertisers").html(__("menuAdvertiser"));
-    $("#view_data_about_me").html(__("menuData"));
-
-    $("#warning").html(__("warningAdBlocker"));
-    $("#collect_preferences").html(__("collectPreferences"));
-    $("#not_logged_yet").html(__("notLoggedYet"));
-
-    $("#consentButton").html(__("consentButton"));
-    $("#consentAlert").html(__("consentAlert"));
-}
-
-
 $(document).ready(function() {
-  i18nUpdates();
-  var welcomePopup = getParameterByName("welcome");
+
+  localizeHtmlPage()
+
+  let welcomePopup = getParameterByName("welcome");
   if (welcomePopup) {
     $("#consentAlert").show();
     $("#consentInfo").css("height", 550);
   }
 
+
+
   $("#normalView").hide();
   $("#warning").hide();
 
   getConsent();
+
 
   $("#consentButton").click(function() {
     sendConsent();
@@ -216,6 +164,7 @@ $(document).ready(function() {
     chrome.tabs.create({url: "chrome://extensions/"});
     window.close()
   });
+
 
   $("#remindMeTomorrow").click(function() {
     data = {
@@ -249,9 +198,10 @@ function setBadge(open = false, currentUserId) {
     let badge = document.createElement('span');
     badge.className = 'badge badge-pill badge-danger';
     badge.innerHTML = localStorage.getItem('survey_number').toString();
-    document.getElementById("survey_all").appendChild(badge);
-    document.getElementById("survey_red_text").innerHTML = "Hi, you are participating in our social media monitor study, please click on start survey to fill out the survey:<br>Thank you !"
-/**
+
+    document.getElementById("survey_red_text").innerHTML = chrome.i18n.getMessage("survey_message")
+
+    /**
     if (open) {
       chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
         if (tabs[0].url.indexOf("survey") === -1) {
@@ -260,11 +210,33 @@ function setBadge(open = false, currentUserId) {
       });
     }
  **/
+
   }
   else {
     document.getElementById("formForReminder").style.visibility = "hidden";
     document.getElementById("formForReminder").style.display = "none";
     document.getElementById("survey_red_text").innerHTML = "";
+  }
+}
+
+function localizeHtmlPage() {
+  let objects = document.getElementsByTagName('html');
+
+  for (let j = 0; j < objects.length; j++)
+  {
+
+    let obj = objects[j];
+
+    let valStrH = obj.innerHTML.toString();
+    let valNewH = valStrH.replace(/__MSG_(\w+)__/g, function(match, v1)
+    {
+      return v1 ? chrome.i18n.getMessage(v1) : "";
+    });
+
+    if(valNewH != valStrH)
+    {
+      obj.innerHTML = valNewH;
+    }
   }
 }
 

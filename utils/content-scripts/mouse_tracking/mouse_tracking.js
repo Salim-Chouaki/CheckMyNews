@@ -6,41 +6,20 @@ var advertiserLinkClass = "fwn fcg";
 var advertiserLogoClass = "_38vo";
 var menuDivClass = "_4xev _p";
 var menuElementDivClass = "_54nc";
-var lastTimestampMessagingON = 0;
-var lastTimestampMessagingOFF = 0;
-
-
-
-
-
-
-function onMessaginOldInterface(){
-    var chatPage = document.getElementById('ChatTabsPagelet');
-    if (chatPage === null || chatPage === undefined){
-        return;
-    }
-    chatPage.addEventListener('DOMSubtreeModified',function(event){
-        var curTs = Date.now();
-        var chatTabs = this.getElementsByClassName('fbNubFlyoutOuter');
-        if(chatTabs.length == 0){
-            if(isOnMessaging){
-                lastTimestampOnMessaging = Date.now();
-                isOnMessaging = false;
-                checkAdVisibleDuration();
-                checkPostVisibleDuration();
-            }
-        }
-        else{
-            if(!isOnMessaging){
-                lastTimestampOnMessaging = Date.now();
-                isOnMessaging = true;
-                interruptAdVisibility();
-                interruptPostVisibility();
-            }
-        }
-    });
-
-}
+var removeLikeEventType = "removeLike";
+var likeEventType = "Like";
+var loveEventType = "Love";
+var hahaEventType = "Haha";
+var wowEventType = "Wow";
+var sadEventType = "Sad";
+var angryEventType = "Angry";
+var hahaText = "Haha";
+var englishWowText = "Wow";
+var frenchWowText = "Wouah";
+var likeColor = "rgb(28, 30, 33)";
+var loveColor = "rgb(243, 62, 88)";
+var hahaColor = "rgb(247, 177, 37)"; // Same for haha Wow and Sad
+var angryColor = "rgb(233, 113, 15)";
 
 
 function addEventListenersOldInterface(ad) {
@@ -48,7 +27,7 @@ function addEventListenersOldInterface(ad) {
     ad["events"] = [];
 
     // This vas will be used to advertiser check
-    var dateForAdvertiserCheckWithHover;
+    let dateForAdvertiserCheckWithHover;
 
     // Getting the html object of the ad
     let frontAd = document.getElementById(ad.html_ad_id);
@@ -56,7 +35,7 @@ function addEventListenersOldInterface(ad) {
     // Listener for réactions : like, love, haha, wow, sad, angry
     let likeButton = frontAd.getElementsByClassName(likeButtonClass)[0];
     if(likeButton !== undefined) {
-        var observer = new MutationObserver(function (mutations) {
+        let observer = new MutationObserver(function (mutations) {
             if (likeButton != null)     {
                 newColor = getComputedStyle(likeButton).color;
                 let type = undefined;
@@ -228,7 +207,7 @@ function removeMenuListener() {
     let menuItems = document.getElementsByClassName(menuElementDivClass);
     if(menuItems !== undefined && menuItems[0] !== undefined) {
         for(let i=0 ; i<menuItems.length ; i++) {
-            var new_element = menuItems[i].cloneNode(true);
+            let new_element = menuItems[i].cloneNode(true);
             menuItems[i].parentNode.replaceChild(new_element, menuItems[i]);
         }
     }
@@ -246,30 +225,26 @@ function addMenuListeners(ad) {
 }
 
 
-
 /**
  * Grab all post visible in user view
  */
 function grabPostsOldInterface(){
 
-    var nextNum = 0;
+    let nextNum = 0;
     if(Object.keys(POST_QUEUE).length>0){
         nextNum = Math.max.apply(null,Object.keys(POST_QUEUE).map(function (x) {return parseInt(x)})) +1 ;
     }
     if(window.location.href.indexOf('ads/preferences') == -1){
-        console.log('Grabbing posts');
-        var allPostsId = [];
-        var allAdsId = Object.keys(FRONTADQUEUE).map(key => FRONTADQUEUE[key]['html_ad_id']);
+        let allPostsId = [];
+        let allAdsId = Object.keys(FRONTADQUEUE).map(key => FRONTADQUEUE[key]['html_ad_id']);
 
         $('div[id*="'+ HTML_POST_ID +'"]').each(function(){
-            var allPostId = Object.keys(POST_QUEUE).map(key => POST_QUEUE[key]['html_post_id']);
+            let allPostId = Object.keys(POST_QUEUE).map(key => POST_QUEUE[key]['html_post_id']);
             if(!allPostId.includes(this.id)){
-                var elmPosition = toRelativeCoordinate(getElementCoordinate($(this)));
+                let elmPosition = toRelativeCoordinate(getElementCoordinate($(this)));
 
                 if(!allAdsId.includes(this.id) && elmPosition !== undefined) {
-                    console.log(this);
                     POST_QUEUE[nextNum] = { 'html_post_id': this.id, 'timestamp': (new Date).getTime(), 'user_id': getUserId(),'visibleDuration':[] };
-                    console.log(POST_QUEUE[nextNum]);
                     nextNum++;
                 }
             }

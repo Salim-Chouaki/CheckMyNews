@@ -1,8 +1,8 @@
 
 
 function param(object) {
-  var encodedString = "";
-  for (var prop in object) {
+  let encodedString = "";
+  for (let prop in object) {
     if (object.hasOwnProperty(prop)) {
       if (encodedString.length > 0) {
         encodedString += "&";

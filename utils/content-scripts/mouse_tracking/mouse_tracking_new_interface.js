@@ -1,9 +1,4 @@
 
-
-var likeButtonClassNewInterface = "rq0escxv l9j0dhe7 du4w35lb j83agx80 cbu4d94t pfnyh3mw d2edcug0 hpfvmrgz ph5uu5jm b3onmgus iuny7tx3 ipjc6fyt";
-var normalLikeColorNewInterface = "rgb(101, 103, 107)";
-var commentButtonClassNewInterface = "oajrlxb2 g5ia77u1 qu0x051f esr5mh6w e9989ue4 r7d6kgcz rq0escxv n05y2jgg hbms080z p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso i1ao9s8h vul9dhcy f1sip0of lzcic4wl l9j0dhe7 abiwlrkh p8dawk7l f49446kz  _666h  _18vj _18vk"
-var shareButtonClassNewInterface = "oajrlxb2 bp9cbjyn g5ia77u1 mtkw9kbi tlpljxtp qensuy8j ppp5ayq2 goun2846 ccm00jje s44p3ltw mk2mc5f4 rt8b4zig n8ej3o3l agehan2d sk4xxmp2 rq0escxv nhd2j8a9 j83agx80 rj1gh0hx btwxx1t3 pfnyh3mw p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x tgvbjcpo hpfvmrgz jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso l9j0dhe7 i1ao9s8h esuyzwwr f1sip0of du4w35lb lzcic4wl abiwlrkh p8dawk7l buofh1pr k7cz35w2 taijpn5t ms05siws flx89l3n ogy3fsii";
 var advertiserLinkClassNewInterface = "oajrlxb2 g5ia77u1 qu0x051f esr5mh6w e9989ue4 r7d6kgcz rq0escxv nhd2j8a9 nc684nl6 p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso i1ao9s8h esuyzwwr f1sip0of lzcic4wl oo9gr5id gpro0wi8 lrazzd5p";
 var advertiserLogoClassNewInterface ="oajrlxb2 gs1a9yip g5ia77u1 mtkw9kbi tlpljxtp qensuy8j ppp5ayq2 goun2846 ccm00jje s44p3ltw mk2mc5f4 rt8b4zig n8ej3o3l agehan2d sk4xxmp2 rq0escxv nhd2j8a9 q9uorilb mg4g778l btwxx1t3 pfnyh3mw p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x tgvbjcpo hpfvmrgz jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso l9j0dhe7 i1ao9s8h esuyzwwr f1sip0of du4w35lb lzcic4wl abiwlrkh p8dawk7l oo9gr5id";
 var menuDivClassNewInterface = "oajrlxb2 gs1a9yip g5ia77u1 mtkw9kbi tlpljxtp qensuy8j ppp5ayq2 goun2846 ccm00jje s44p3ltw mk2mc5f4 rt8b4zig n8ej3o3l agehan2d sk4xxmp2 rq0escxv nhd2j8a9 pq6dq46d mg4g778l btwxx1t3 pfnyh3mw p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x tgvbjcpo hpfvmrgz jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso l9j0dhe7 i1ao9s8h esuyzwwr f1sip0of du4w35lb lzcic4wl abiwlrkh p8dawk7l dwo3fsh8 pzggbiyp pkj7ub1o bqnlxs5p kkg9azqs c24pa1uk ln9iyx3p fe6kdd0r ar1oviwq l10q8mi9 sq40qgkc s8quxz6p pdjglbur";
@@ -12,106 +7,92 @@ var carouselNextClassNewInterface = "hu5pjgll m6k467ps sp_D-6eZQK8GT3 sx_dae08a"
 var carouselPreviousClassNewInterface = "hu5pjgll m6k467ps sp_D-6eZQK8GT3 sx_126de3";
 var minBodyImgSize = 200;
 
+var LIKE_TEXTS = ["Like", "J’aime", "Curtir", "Gosto", "Gefällt mir", "Me gusta"]
 
-function onMessagingNewInterface() {
-
-    var chatPage = document.getElementsByClassName("poy2od1o i09qtzwb n7fi1qx3")[0];
-
-    if (chatPage === null || chatPage === undefined) {
-        console.log('Error: ChatTabsPagelet not found');
-        return;
-    }
-    chatPage.addEventListener('DOMSubtreeModified', function (event) {
-        var chatTabs = $('div[data-pagelet="ChatTab"]');
-        if (chatTabs.length == 0) {
-            if (isOnMessaging) {
-                lastTimestampOnMessaging = Date.now();
-                isOnMessaging = false;
-                checkAdVisibleDuration();
-                checkPostVisibleDuration();
-            }
-        } else {
-            if (!isOnMessaging) {
-                lastTimestampOnMessaging = Date.now();
-                isOnMessaging = true;
-                interruptAdVisibility();
-                interruptPostVisibility();
-            }
+function removeMenuListenerNewInterface() {
+    let menuItems = document.getElementsByClassName(menuElementDivClassNewInterface);
+    if(menuItems !== undefined && menuItems[0] !== undefined) {
+        for(let i=0 ; i<menuItems.length ; i++) {
+            let new_element = menuItems[i].cloneNode(true);
+            menuItems[i].parentNode.replaceChild(new_element, menuItems[i]);
         }
-    });
+    }
+}
 
+function addMenuListenersNewInterface(ad) {
+    let menuItems = document.getElementsByClassName(menuElementDivClassNewInterface);
+    if(menuItems !== undefined && menuItems[0] !== undefined) {
+        for(let i=0; i<menuItems.length ; i++) {
+            menuItems[i].addEventListener('click', function () {
+                storeAdClickEvent(ad, menuItems[i].innerText.split('\n')[0]);
+            });
+        }
+    }
 }
 
 
-function addEventListenersNewInterface(ad) {
-    // This vas will be used to advertiser check
-    var dateForAdvertiserCheckWithHover;
+function add_post_to_private_posts_queue(post){
+    let nextNum = 0;
+    if(Object.keys(POST_QUEUE).length>0){
+        nextNum = Math.max.apply(null,Object.keys(POST_QUEUE).map(function (x) {return parseInt(x)})) +1 ;
+    }
+    markAd(post);
+    POST_QUEUE[nextNum] = { 'html_post_id': post.id, 'timestamp': (new Date).getTime(), 'user_id': getUserId(),'visibleDuration':[] };
 
+}
+
+/**
+ * Grab all post visible in user view
+ * WE ARE NOT USING THIS STARTING FROM VERSION 0.0.0.10 OF CHECKMYNEWS, WE MOVED THE DETECTION OF PRIVATE POSTS TO THE FUNCTION THAT DETECTS NEWS AND PUBLIC POSTS
+ */
+function grabPostsNewInterface(){
+    let nextNum = 0;
+    if(Object.keys(POST_QUEUE).length>0){
+        nextNum = Math.max.apply(null,Object.keys(POST_QUEUE).map(function (x) {return parseInt(x)})) +1 ;
+    }
+
+    if(window.location.href.indexOf('ads/preferences') === -1){
+        let allAdsId = Object.keys(FRONTADQUEUE).map(key => FRONTADQUEUE[key]['html_ad_id']);
+        let allPostId = Object.keys(POST_QUEUE).map(key => POST_QUEUE[key]['html_post_id']);
+
+        let allDomPosts = document.getElementsByClassName(POST_CLASS_NEW_INTERFACE);
+        for (let i = 0; i < allDomPosts.length; i++) {
+            if((!allPostId.includes(allDomPosts[i].id) ) && (!allAdsId.includes(allDomPosts[i].id))){
+                markAd(allDomPosts[i]);
+                POST_QUEUE[nextNum] = { 'html_post_id': allDomPosts[i].id, 'timestamp': (new Date).getTime(), 'user_id': getUserId(),'visibleDuration':[] };
+                nextNum++;
+            }
+        }
+    }
+}
+
+function addEventListenersNewInterface(ad) {
+    let dateForAdvertiserCheckWithHover;
 
     let frontAd = document.getElementById(ad.html_ad_id);
 
-    // Listener for réactions : like, love, haha, wow, sad, angry
-    //    let likeButton = frontAd.getElementsByClassName(likeButtonClassNewInterface)[0];
+    let likeButton = undefined
+    for(let i=0; i < LIKE_TEXTS.length; i++) {
+        likeButton = frontAd.querySelectorAll('[aria-label="' + LIKE_TEXTS[i] + '"]')[0];
+        if (likeButton !== undefined) {
+            break;
+        }
+    }
 
-    let likeButton = frontAd.querySelectorAll('[aria-label="Like"]')[0];
-    if(likeButton!== undefined){
 
-        // IT was with the observer to detect the different colors (different reactions)
-        // But facebook made it impossible
-        // So i just detect the click now
-        /**
-        var observer = new MutationObserver(function (mutations) {
-            if (likeButton != null) {
-                newColor = getComputedStyle(likeButton).color;
-                console.log(getComputedStyle(likeButton));
-                let type = undefined;
-                if (newColor === normalLikeColorNewInterface) {
-                    if ( lastEventType !== normalLikeColor){
-                        type = removeLikeEventType;
-                    }
-                } else if (newColor === likeColor) {
-                    if (lastEventType !== likeEventType) {
-                        type = likeEventType;
-                    }
-                } else if (newColor === loveColor) {
-                    type = loveEventType;
-                } else if (newColor === hahaColor) { //Haha wow and sad
-                    if (likeButton.innerHTML.indexOf(hahaText) !== -1) {
-                        type = hahaEventType;
-                    } else if (likeButton.innerHTML.indexOf(englishWowText) !== -1 || likeButton.innerHTML.indexOf(frenchWowText) !== -1) {
-                        type = wowEventType;
-                    } else if (likeButton.innerHTML.indexOf(englishCareText) !== -1 || likeButton.innerHTML.indexOf(frenchCareText) !== -1) {
-                        type = careEventType;
-                    } else {
-                        type = sadEventType
-                    }
-
-                } else if (newColor === angryColor) {
-                    type = angryEventType;
-                }
-
-                if(type !== undefined) {
-                    storeAdClickEvent(ad, type);
-                }
-            }
-        });
-        observer.observe(likeButton, {attributes: true, childList: true});
- **/
-
+    if(likeButton !== undefined ){
         likeButton.addEventListener('click', function (){
             storeAdClickEvent(ad, LikeButtonAllReactionsEventType);
         })
     }
 
-
-    // Listener for clicking on comment button and writing comment
-
-//    let commentButton = frontAd.getElementsByClassName(commentButtonClassNewInterface)[0];
-    let commentButton = frontAd.querySelectorAll('[aria-label="Leave a comment"]')[0];
+    let commentButton = frontAd.querySelectorAll('[aria-label="Leave a comment"], [aria-label="Kommentar hinterlassen"]') [0]; //DIFFERENT VALUE ONLY FOR DEUTCH, BUT FOR OTHER LANGUAGES ITS THE ENGLISH VERSION
     if (commentButton !== undefined) {
         commentButton.addEventListener('click', function () {
             storeAdClickEvent(ad, commentButtonClickEventType)
         });
+
+        /** this is useless
         commentButton.addEventListener('mouseleave', function () {
             let frontAdUpdated = document.getElementById(ad.html_ad_id);
             let commentWritingDiv = frontAdUpdated.getElementsByClassName(commentWritingDivClass)[0];
@@ -123,12 +104,11 @@ function addEventListenersNewInterface(ad) {
                 })
             }
         });
+         **/
     }
 
-    //Listener for share button
 
-//    let shareButton = frontAd.getElementsByClassName(shareButtonClassNewInterface)[0];
-    let shareButton = frontAd.querySelectorAll('[aria-label="Send this to friends or post it on your timeline."]')[0];
+    let shareButton = frontAd.querySelectorAll('[aria-label="Send this to friends or post it on your timeline."], [aria-label="Schicke das an Freunde oder poste es in deiner Chronik."]') [0]; //DIFFERENT VALUE ONLY FOR DEUTCH, BUT FOR OTHER LANGUAGES ITS THE ENGLISH VERSION
     if (shareButton !== undefined) {
         shareButton.addEventListener('click', function () {
             storeAdClickEvent(ad, shareEventType);
@@ -232,53 +212,5 @@ function addEventListenersNewInterface(ad) {
                 }
             }
         })
-    }
- }
-
-function removeMenuListenerNewInterface() {
-    let menuItems = document.getElementsByClassName(menuElementDivClassNewInterface);
-    if(menuItems !== undefined && menuItems[0] !== undefined) {
-        for(let i=0 ; i<menuItems.length ; i++) {
-            var new_element = menuItems[i].cloneNode(true);
-            menuItems[i].parentNode.replaceChild(new_element, menuItems[i]);
-        }
-    }
-}
-
-function addMenuListenersNewInterface(ad) {
-    let menuItems = document.getElementsByClassName(menuElementDivClassNewInterface);
-    if(menuItems !== undefined && menuItems[0] !== undefined) {
-        for(let i=0; i<menuItems.length ; i++) {
-            menuItems[i].addEventListener('click', function () {
-                storeAdClickEvent(ad, menuItems[i].innerText.split('\n')[0]);
-            });
-        }
-    }
-}
-
-
-/**
- * Grab all post visible in user view
- */
-function grabPostsNewInterface(){
-    var nextNum = 0;
-    if(Object.keys(POST_QUEUE).length>0){
-        nextNum = Math.max.apply(null,Object.keys(POST_QUEUE).map(function (x) {return parseInt(x)})) +1 ;
-    }
-    if(window.location.href.indexOf('ads/preferences') == -1){
-        var allAdsId = Object.keys(FRONTADQUEUE).map(key => FRONTADQUEUE[key]['html_ad_id']);
-        var allDomPosts = document.getElementsByClassName(POST_CLASS_NEW_INTERFACE);
-        for (let i = 0; i < allDomPosts.length; i++) {
-            var allPostId = Object.keys(POST_QUEUE).map(key => POST_QUEUE[key]['html_post_id']);
-
-            if(!allPostId.includes(allDomPosts[i].id)){
-                var elmPosition = toRelativeCoordinate(getElementCoordinate($(allDomPosts[i])));
-                if(!allAdsId.includes(allDomPosts[i].id) && elmPosition !== undefined) {
-                    markAd(allDomPosts[i]);
-                    POST_QUEUE[nextNum] = { 'html_post_id': allDomPosts[i].id, 'timestamp': (new Date).getTime(), 'user_id': getUserId(),'visibleDuration':[] };
-                    nextNum++;
-                }
-            }
-        }
     }
 }

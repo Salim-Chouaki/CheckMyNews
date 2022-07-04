@@ -97,7 +97,11 @@ var DAY_MILISECONDS =  8.64e+7;
 
 var ONE_HALF_MINUTE = 90000;
 
+var HALF_MINUTE = 30000;
+
 var ONEMINUTE = 60000
+
+var FIVE_MINUTES = 5 * ONEMINUTE
 
 var FIFTEENMINUTES = ONE_HALF_MINUTE*15;
 
@@ -223,12 +227,9 @@ function sendStillAliveRequest() {
         error : function(xhr, textStatus, errorThrown ) {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-                //try again
-                console.log('Trying again...')
                 $.ajax(this);
                 return;
             }
-            console.log('Stoping trying...');
             return
         }
     });
@@ -258,8 +259,7 @@ function getCaptchaStatus(){
 }
 
 function getLastTimeShowPopup(){
-    if(!localStorage.lastTimeShowPopUp)
-    {
+    if(!localStorage.lastTimeShowPopUp) {
         localStorage.lastTimeShowPopUp = -1
     }
     return parseInt(localStorage.lastTimeShowPopUp);
@@ -289,15 +289,13 @@ function getAdActivityList(){
  * @return {[type]}      [description]
  */
 function getUserIdAjax(resp) {
-    var parser = new DOMParser();
-    var htmlDoc = parser.parseFromString(resp,"text/html");
-    var userId = captureErrorBackground(getUserId,[htmlDoc],URLS_SERVER.registerError,undefined);
+    let parser = new DOMParser();
+    let htmlDoc = parser.parseFromString(resp,"text/html");
+    let userId = captureErrorBackground(getUserId,[htmlDoc],URLS_SERVER.registerError,undefined);
     if ((userId)&& (userId!=-1)) {
-        captureErrorBackground(openWindowToNewUsers,[],URLS_SERVER.registerError,undefined);
         LOGGED_IN=true;
         if ((userId!==CURRENT_USER_ID) || (CURRENT_EMAIL==='')) {
             CURRENT_USER_ID = userId;
-            captureErrorBackground(setFacebookInterfaceVersionDoc,[CURRENT_USER_ID,resp],URLS_SERVER.registerError,undefined);
             executeAfterUserId();
         }
         CURRENT_USER_ID = userId;
@@ -317,11 +315,10 @@ function getCurrentUserId() {
         url:FACEBOOK_PAGE,
         success: function(resp) {
             captureErrorBackground(getUserIdAjax,[resp],URLS_SERVER.registerError,undefined);
-            captureErrorBackground(checkStillAlive,[],undefined);
         }
     });
 
-    window.setTimeout(getCurrentUserId,ONE_HALF_MINUTE/6)
+    window.setTimeout(getCurrentUserId,FIVE_MINUTES)
 
 }
 
@@ -333,15 +330,15 @@ function getCurrentUserId() {
  * @return {string}      email of the user
  */
 function parseCurrentEmail(resp) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(resp,'text/html');
-    var links = doc.getElementsByTagName('a');
-    var link = '';
-    var email = ''
+    let parser = new DOMParser();
+    let doc = parser.parseFromString(resp,'text/html');
+    let links = doc.getElementsByTagName('a');
+    let link = '';
+    let email = ''
     for (let i=0;i<links.length;i++) {
         if (links[i].getAttribute('href')==='/settings?tab=account&section=email') {
             link = links[i];
-            var em = link.getElementsByTagName('strong')[0].textContent;
+            let em = link.getElementsByTagName('strong')[0].textContent;
             if (captureErrorBackground(isEmail,[em],URLS_SERVER.registerError,false)) {
                 email = em;
             }
@@ -380,7 +377,8 @@ function parseCurrentEmail(resp) {
  * @return {undefined} nothing
  */
 function updateEmailServer() {
-    var dat = {user_id:CURRENT_USER_ID,email:CURRENT_EMAIL};
+    let
+        dat = {user_id:CURRENT_USER_ID,email:CURRENT_EMAIL};
     if ((isCurrentUser()!==true) || (CURRENT_EMAIL == '')) {
         return
     }
@@ -443,17 +441,14 @@ function updateEmailServer() {
                 if (a[STATUS] && (a[REASON]=NO_USER_CONSENT)) {
                     captureErrorBackground(getConsentFromServer,[URLS_SERVER.getConsent,0,genericRequestSuccess,genericRequestNoConsent,genericRequestError],URLS_SERVER.registerError,undefined);
                 }
-                console.log('Failure to register phone');
                 window.setTimeout(function() {captureErrorBackground(getCurrentUserEmailByVersion,[],URLS_SERVER.registerError,undefined)},ONE_HALF_MINUTE)
                 return true
             };
             window.setTimeout(function() {captureErrorBackground(getCurrentUserEmailByVersion,[],URLS_SERVER.registerError,undefined)},DAY_MILISECONDS)
-            console.log('Success registering email');
 
 
         },
     }).fail(function(a){
-            console.log('Failure to register email');
             window.setTimeout(function() {captureErrorBackground(getCurrentUserEmailByVersion,[],URLS_SERVER.registerError,undefined)},ONE_HALF_MINUTE)
 
         }
@@ -618,7 +613,7 @@ function getCurrentLanguage(url) {
     $.get({
         url:url,
         success: function(resp) {
-            var lanuid =  captureErrorBackground(getLanguageUserIdFromHtml,[resp],URLS_SERVER.registerError,undefined);
+            let lanuid =  captureErrorBackground(getLanguageUserIdFromHtml,[resp],URLS_SERVER.registerError,undefined);
 
 
             if ((lanuid.language!=undefined) && (lanuid.user_id!=undefined)) {
@@ -628,9 +623,9 @@ function getCurrentLanguage(url) {
                     CURRENT_USER_ID=lanuid.user_id;
                 }
 
-                var lastLanguageCrawl = localStorage[CURRENT_USER_ID+'lastLanguageCrawl']?localStorage[CURRENT_USER_ID+'lastLanguageCrawl']:0;
-                var timeNow = (new Date).getTime();
-                var server_message = "";
+                let lastLanguageCrawl = localStorage[CURRENT_USER_ID+'lastLanguageCrawl']?localStorage[CURRENT_USER_ID+'lastLanguageCrawl']:0;
+                let timeNow = (new Date).getTime();
+                let server_message = "";
                 //if one day has passed send it just for update
                 if (timeNow-lastLanguageCrawl>= DAY_MILISECONDS) {
                     localStorage[CURRENT_USER_ID+'lastLanguageCrawl']=timeNow;
@@ -675,8 +670,8 @@ function getCurrentLanguage(url) {
  */
 function parseLanguageFromLanguagePage(doc) {
 
-    var links = doc.getElementsByTagName('a');
-    var languageElem = '';
+    let links = doc.getElementsByTagName('a');
+    let languageElem = '';
     for (let i=0;i<links.length;i++) {
 
         if ((links[i].href== null) || (links[i].href.indexOf(LANGUAGE_HREF)==-1)){
@@ -690,7 +685,7 @@ function parseLanguageFromLanguagePage(doc) {
 
     if (languageElem === '') return
 
-    var strongElems = languageElem.getElementsByTagName('strong');
+    let strongElems = languageElem.getElementsByTagName('strong');
 
     if (strongElems.length!=1) {
         throw "More than one strong elements in the language link"
@@ -707,10 +702,10 @@ function parseLanguageFromLanguagePage(doc) {
  * @return {object}      object containing the language and the user id
  */
 function getLanguageUserIdFromHtml(resp) {
-    var parser = new DOMParser();
-    var htmlDoc = parser.parseFromString(resp,"text/html");
-    var user_id = captureErrorBackground(getUserIdStr,[htmlDoc.head.innerHTML],URLS_SERVER.registerError,undefined);
-    var language = captureErrorBackground(parseLanguageFromLanguagePage,[htmlDoc],URLS_SERVER.registerError,undefined);
+    let parser = new DOMParser();
+    let htmlDoc = parser.parseFromString(resp,"text/html");
+    let user_id = captureErrorBackground(getUserIdStr,[htmlDoc.head.innerHTML],URLS_SERVER.registerError,undefined);
+    let language = captureErrorBackground(parseLanguageFromLanguagePage,[htmlDoc],URLS_SERVER.registerError,undefined);
     return {'language':language,'user_id':user_id};
 
 }
@@ -722,7 +717,7 @@ function getLanguageUserIdFromHtml(resp) {
  * @return {[type]}                [description]
  */
 function updateLanguageServer(server_message) {
-    var dat = {user_id:CURRENT_USER_ID,
+    let dat = {user_id:CURRENT_USER_ID,
         language:localStorage[CURRENT_USER_ID+'language'],
         timestamp:(new Date).getTime(),
         message:server_message
@@ -806,17 +801,17 @@ function getBase64FromImageUrl(url,req_id,request,sendResponse,count=3) {
 
 
     try {
-        var img = new Image();
+        let img = new Image();
         img.setAttribute('crossOrigin', 'anonymous');
         img.onload = function () {
-            var canvas = document.createElement("canvas");
+            let canvas = document.createElement("canvas");
             canvas.width =this.width;
             canvas.height =this.height;
 
-            var ctx = canvas.getContext("2d");
+            let ctx = canvas.getContext("2d");
             ctx.drawImage(this, 0, 0);
 
-            var dataURL = canvas.toDataURL("image/png");
+            let dataURL = canvas.toDataURL("image/png");
             MEDIA_REQUESTS[req_id][url] = dataURL
             if (mediaRequestsDone(req_id)){
                 request[MEDIA_CONTENT] = MEDIA_REQUESTS[req_id];
@@ -847,7 +842,7 @@ function getBase64FromImageUrl(url,req_id,request,sendResponse,count=3) {
 
 
 function getBase64FromImageUrlClickedAd(url, req_id, request, count = 3) {
-    var curr_ts = (new Date()).getTime();
+    let curr_ts = (new Date()).getTime();
     if ((localStorage.lastClickedAdSaved) && (curr_ts - localStorage.lastClickedAdSaved) < ONEMINUTE){
         getBase64FromImageUrlClickedAd(url,req_id, request,count = 3);
         return;
@@ -862,19 +857,19 @@ function getBase64FromImageUrlClickedAd(url, req_id, request, count = 3) {
 
 
     try {
-        var img = new Image();
+        let img = new Image();
 
         img.setAttribute('crossOrigin', 'anonymous');
 
         img.onload = function () {
-            var canvas = document.createElement("canvas");
+            let canvas = document.createElement("canvas");
             canvas.width = this.width;
             canvas.height = this.height;
 
-            var ctx = canvas.getContext("2d");
+            let ctx = canvas.getContext("2d");
             ctx.drawImage(this, 0, 0);
 
-            var dataURL = canvas.toDataURL("image/png");
+            let dataURL = canvas.toDataURL("image/png");
 
             MEDIA_REQUESTS[req_id][url] = dataURL
             if (mediaRequestsDone(req_id)) {
@@ -924,7 +919,7 @@ function getAdActivity(lastItem) {
 //                    return
 //            }
             } catch (err) {
-                console.log(err)
+                debugLog(err)
             }
 
         }
@@ -945,16 +940,16 @@ function getSupportedLangs(){
         traditional:true,
         success: function(resp){
             if (resp[STATUS] !== FAILURE) {
-                localStorage['SupportLanguages'] = resp['languages'];
                 localStorage['SponsoredTexts'] = resp['sponsored_texts'];
-                localStorage['QuestionTexts'] = resp['question_texts'];
-                localStorage['StoryTexts'] = resp['story_texts'];
+                localStorage['PublicTexts'] = resp['public_texts'];
+                localStorage['LikeTexts'] = resp['like_texts'];
+                localStorage["sponsored_text_update_time"] = (new Date()).getTime()
                 return true
             }
             return true
         },
         error:function() {
-            console.log('request failed');
+            debugLog('request failed');
         }
     });
 }
@@ -970,13 +965,11 @@ function mediaRequestsDone(reqId) {
     return allDone
 }
 
-
-
 function sendFrontAd(request,sendResponse) {
 
     delete request[MSG_TYPE];
-    var reqId = MEDIA_REQUEST_ID++;
-    var imgsToCrawl = request[IMAGES];
+    let reqId = MEDIA_REQUEST_ID++;
+    let imgsToCrawl = request[IMAGES];
     if ((request[ADV_PROF_PIC]) && (request[ADV_PROF_PIC].length>0)) {
         imgsToCrawl.push(request[ADV_PROF_PIC])
     }
@@ -1005,14 +998,14 @@ function sendFrontAd(request,sendResponse) {
 }
 
 function sendClickedAd(clickedAds) {
-    var adClickedData = clickedAds.adClickedData;
+    let adClickedData = clickedAds.adClickedData;
 
     for(key in adClickedData){
-        var request = adClickedData[key];
+        let request = adClickedData[key];
         request['user_id'] = clickedAds.user_id;
 
-        var reqId = MEDIA_REQUEST_ID++;
-        var imgsToCrawl = request.contents['fullImageURLs']; //imageURLs,fullImageURLs,facebookPageProfilePicURL
+        let reqId = MEDIA_REQUEST_ID++;
+        let imgsToCrawl = request.contents['fullImageURLs']; //imageURLs,fullImageURLs,facebookPageProfilePicURL
         if(request.contents['imageURLs'] && request.contents['imageURLs'].length > 0)
             imgsToCrawl.push(request.contents['imageURLs']);
 
@@ -1038,7 +1031,7 @@ function appendObject(l1, l2){
 
     l1.lastItem = l2.lastItem;
     l1.hasmore = l2.hasmore;
-    var _newItemKeys = Object.keys(l2.adClickedData);
+    let _newItemKeys = Object.keys(l2.adClickedData);
     for(key of _newItemKeys){
         l1.adClickedData[key] = l2.adClickedData[key];
     }
@@ -1049,7 +1042,6 @@ function changeIcon(){
     if (hasCurrentUserConsent(0)===true) {
         chrome.browserAction.setIcon({ path: "media/enabled.png" });
         setTimeout(changeIcon,1000);
-
         return
     }
 
@@ -1060,8 +1052,8 @@ function changeIcon(){
 
 function sendSideAd(request,sendResponse) {
     delete request[MSG_TYPE];
-    var reqId = MEDIA_REQUEST_ID++;
-    var imgsToCrawl = request[IMAGES];
+    let reqId = MEDIA_REQUEST_ID++;
+    let imgsToCrawl = request[IMAGES];
 
     MEDIA_REQUESTS[reqId] = {};
     for (let i =0 ; i<imgsToCrawl.length; i++) {
@@ -1074,7 +1066,6 @@ function sendSideAd(request,sendResponse) {
 
 
 }
-
 
 function openConsent() {
     chrome.tabs.create({'url':chrome.extension.getURL('ui/new_consent.html')});
@@ -1105,11 +1096,9 @@ function getNumberOfSurveys(showPopup = false) {
                 }
                 this.tryCount++;
                 if (this.tryCount <= this.retryLimit) {
-                    console.log('Trying again...')
                     $.ajax(this);
                     return;
                 }
-                console.log('Stoping trying...');
                 window.setTimeout(getNumberOfSurveys,ONE_HOUR);
                 return true
             }
@@ -1131,14 +1120,12 @@ function getNumberOfSurveys(showPopup = false) {
         error: function (xhr, textStatus, errorThrown) {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-                //try again
-                console.log('Trying again...')
 
                 $.ajax(this);
                 return;
             }
             window.setTimeout(getNumberOfSurveys,ONE_HOUR);
-            console.log('Stoping trying...');
+
             return
         }
     });
@@ -1147,14 +1134,14 @@ function getNumberOfSurveys(showPopup = false) {
 function onFacebookLogin(){
     if (!localStorage.getItem('accessToken')) {
         chrome.tabs.query({}, function(tabs) { // get all tabs from every window
-            for (var i = 0; i < tabs.length; i++) {
+            for (let i = 0; i < tabs.length; i++) {
                 if (!tabs[i].url) {continue}
                 if (tabs[i].url.indexOf(successURL) !== -1) {
                     // below you get string like this: access_token=...&expires_in=...
-                    var params = tabs[i].url.split('#')[1];
+                    let params = tabs[i].url.split('#')[1];
 
                     // in my extension I have used mootools method: parseQueryString. The following code is just an example ;)
-                    var accessToken = params.split('&')[0];
+                    let accessToken = params.split('&')[0];
                     accessToken = accessToken.split('=')[1];
 
 
@@ -1174,12 +1161,12 @@ function executeAfterUserIdNotFound() {
         not_logged_page_opened = false;
     }
 
+    window.setTimeout(getCurrentUserId,HALF_MINUTE)
 }
 
 
 function executeAfterUserId() {
-    captureErrorBackground(getConsentFromServer,[URLS_SERVER.getConsent,0,genericRequestSuccess,genericRequestNoConsent,genericRequestError],URLS_SERVER.registerError,undefined);
-    window.setTimeout(executeAfterConsent, 8000);
+    captureErrorBackground(getConsentFromServer,[URLS_SERVER.getConsent,0,executeAfterConsent,genericRequestNoConsent,genericRequestError],URLS_SERVER.registerError,undefined);
 }
 
 
@@ -1187,12 +1174,17 @@ function executeAfterUserId() {
 
 function executeAfterConsent() {
     changeIcon();
+    captureErrorBackground(sendExtensionNameAndVersion, [], URLS_SERVER.registerError, undefined);
+    captureErrorBackground(setFacebookInterfaceVersionDoc,[CURRENT_USER_ID],URLS_SERVER.registerError,undefined);
+    captureErrorBackground(checkStillAlive,[],undefined);
     captureErrorBackground(getSupportedLangs,[],URLS_SERVER.registerError,undefined)
     captureErrorBackground(getNumberOfSurveys, [], URLS_SERVER.registerError, undefined);
     captureErrorBackground(getCurrentUserEmailByVersion,[],URLS_SERVER.registerError,undefined);
     captureErrorBackground(getCurrentLanguageByVersion,[],URLS_SERVER.registerError,undefined)
     captureErrorBackground(checkForAdBlocker,[],URLS_SERVER.registerError,undefined);
     // captureErrorBackground(checkForBehaviorsDemographics,[],URLS_SERVER.registerError,undefined);
+
+
     captureErrorBackground(checkForAdvertisers,[],URLS_SERVER.registerError,undefined);
     captureErrorBackground(checkForInterests,[],URLS_SERVER.registerError,undefined);
     captureErrorBackground(exploreQueue,[],URLS_SERVER.registerError,undefined);
@@ -1230,14 +1222,12 @@ chrome.windows.onCreated.addListener(function(windows){
 
 
 chrome.windows.onRemoved.addListener(function(windows){
-
     NUM_WINDOWS--;
     if( NUM_WINDOWS <= 0 ) {
         localStorage.crawledExplanations = JSON.stringify(CRAWLED_EXPLANATIONS);
         localStorage.explanationsQueue = JSON.stringify(EXPLANATIONS_QUEUE);
         localStorage.explanationRequests = JSON.stringify(EXPLANATION_REQUESTS);
         localStorage.sentErrors = JSON.stringify(SENT_ERRORS);
-
     }
 
 });
@@ -1247,29 +1237,24 @@ chrome.windows.onRemoved.addListener(function(windows){
 /*************************** CHROME REQUEST LISTENER ***********************************/
 
 //https://www.facebook.com/ads/preferences/dialog/?ad_id=6066215713784&optout…mnBCwNoy9Dx6WK&__af=iw&__req=d&__be=-1&__pc=PHASED%3ADEFAULT&__rev=2872472
-chrome.webRequest.onBeforeRequest.addListener(
-    function (details) {
+chrome.webRequest.onBeforeRequest.addListener(function (details) {
 
         if (details.url.indexOf('waist_content/dialog/?id')==-1) {
             return {cancel:false}
         }
 
 
-
         if (isUserRequest(details)) {
             EXPLANATION_REQUESTS[CURRENT_USER_ID].push((new Date()).getTime())
-
             return   {cancel: false};
-
-
         }
 
         cleanRequestLog(CURRENT_USER_ID)
-        var ts =  (new Date()).getTime()
-        var maxTs = Math.max.apply(null, EXPLANATION_REQUESTS[CURRENT_USER_ID])
+        let ts =  (new Date()).getTime()
+        let maxTs = Math.max.apply(null, EXPLANATION_REQUESTS[CURRENT_USER_ID])
 
         if ((WAIT_FOR_TWO_HOURS) && (ts-maxTs < TWO_HOURS)) {
-            return   {cancel: true};
+            return {cancel: true};
         }
 
         if ((WAIT_FOR_TWO_HOURS) && (ts-maxTs >= TWO_HOURS)) {
@@ -1277,18 +1262,13 @@ chrome.webRequest.onBeforeRequest.addListener(
         }
 
         if (ts-maxTs < WAIT_BETWEEN_REQUESTS) {
-            return   {cancel: true};
+            return {cancel: true};
         }
 
         EXPLANATION_REQUESTS[CURRENT_USER_ID].push((new Date()).getTime())
         return   {cancel: false};
 
-
-
-
-
-//            return   {cancel: true};
-    },
+        },
     { urls: [BLOCKING_URL]},["blocking"]
 );
 
@@ -1311,7 +1291,7 @@ chrome.runtime.onMessage.addListener(
             }
 
             if (request.getConsent) {
-                captureErrorBackground(sendConsentStatusToComponents, [URLS_SERVER.getConsent,sendResponse,request.consentMode], URLS_SERVER.registerError, {});
+                captureErrorBackground(sendConsentStatusToComponents, [URLS_SERVER.getConsent,sendResponse], URLS_SERVER.registerError, {});
                 return true;
             }
 
@@ -1320,7 +1300,7 @@ chrome.runtime.onMessage.addListener(
         if ((!sender.tab) || (sender.tab && (sender.url) && (typeof sender.url === "string") && (sender.url.indexOf('popup.html')>-1)) ){
             if (request.setConsent) {
 
-                if (CURRENT_USER_ID===-1) {
+                if (isCurrentUser()!==true) {
                     sendResponse({"ok":false});
                     return true
 
@@ -1350,19 +1330,19 @@ chrome.runtime.onMessage.addListener(
 
             if (!request) return true;
 
-            if (request[MSG_TYPE] == 'consent') {
+            if (request[MSG_TYPE] === 'consent') {
                 captureErrorBackground(sendConsentStatusToComponents, [URLS_SERVER.getConsent,sendResponse], URLS_SERVER.registerError, {});
                 return true;
             }
 
-            if(request[MSG_TYPE] == GET_SPONSORED_TEXTS){
-                if (localStorage.SupportLanguages != undefined && localStorage.SupportLanguages != ''){
+            if(request[MSG_TYPE] === GET_SPONSORED_TEXTS){
+                let tsnow = (new Date()).getTime()
+                if ((localStorage.SponsoredTexts !== undefined && localStorage.SponsoredTexts !== '' && localStorage.PublicTexts !== undefined && localStorage.PublicTexts !== '') || (localStorage.sponsored_text_update_time !== undefined && tsnow - localStorage.sponsored_text_update_time < DAY_MILISECONDS * 10)){
                     let resp_data = {
                         'Status': 'OK',
-                        'SupportLanguages': localStorage['SupportLanguages']   ,
-                        'SponsoredTexts':  localStorage['SponsoredTexts'] ,
-                        'QuestionTexts': localStorage['QuestionTexts'] ,
-                        'StoryTexts': localStorage['StoryTexts']
+                        'SponsoredTexts':  localStorage['SponsoredTexts'],
+                        "PublicTexts" : localStorage['PublicTexts'],
+                        "LikeTexts" : localStorage["LikeTexts"]
                     }
                     sendResponse(resp_data);
                 }
@@ -1380,11 +1360,11 @@ chrome.runtime.onMessage.addListener(
                     NOT_SHOW_POPUP_AGAIN = 1;
                     localStorage.notNotifyPopupAgain = NOT_SHOW_POPUP_AGAIN;
                 }
-                var tsNow = (new Date()).getTime();
+                let tsNow = (new Date()).getTime();
                 TIMESTAMP_SHOWN_POPUP = tsNow;
                 localStorage.lastTimeShowPopUp = TIMESTAMP_SHOWN_POPUP;
                 //Keep server log
-                var errorInfo = {};
+                let errorInfo = {};
                 errorInfo[MSG_TYPE] = ERROR_TYPES.TEST_ERROR_BACKGROUND_SCRIPT;
                 errorInfo[ERROR_MESSAGE] = "POPUP INFO: {user_id : " + CURRENT_USER_ID + ", option : " + request['chk_option']+ "} - " + getExtensionVersion();
                 sendErrorMessage(errorInfo, URLS_SERVER.registerError);
@@ -1421,11 +1401,11 @@ chrome.runtime.onMessage.addListener(
                             }
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
-                                console.log('Trying again...')
+
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
+
                             return true
                         };
                         return true
@@ -1435,12 +1415,12 @@ chrome.runtime.onMessage.addListener(
                         this.tryCount++;
                         if (this.tryCount <= this.retryLimit) {
                             //try again
-                            console.log('Trying again...')
+
 
                             $.ajax(this);
                             return;
                         }
-                        console.log('Stoping trying...');
+
                         return
                     }
                 });
@@ -1466,11 +1446,11 @@ chrome.runtime.onMessage.addListener(
                             }
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
-                                console.log('Trying again...')
+
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
+
                             return true
                         };
                         return true
@@ -1480,12 +1460,12 @@ chrome.runtime.onMessage.addListener(
                         this.tryCount++;
                         if (this.tryCount <= this.retryLimit) {
                             //try again
-                            console.log('Trying again...')
+
 
                             $.ajax(this);
                             return;
                         }
-                        console.log('Stoping trying...');
+
                         return
                     }
                 });
@@ -1510,11 +1490,11 @@ chrome.runtime.onMessage.addListener(
                             }
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
-                                console.log('Trying again...')
+
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
+
                             return true
                         };
                         return true
@@ -1524,12 +1504,12 @@ chrome.runtime.onMessage.addListener(
                         this.tryCount++;
                         if (this.tryCount <= this.retryLimit) {
                             //try again
-                            console.log('Trying again...')
+
 
                             $.ajax(this);
                             return;
                         }
-                        console.log('Stoping trying...');
+
                         return
                     }
                 });
@@ -1554,11 +1534,11 @@ chrome.runtime.onMessage.addListener(
                             }
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
-                                console.log('Trying again...')
+
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
+
                             return true
                         };
                         return true
@@ -1568,12 +1548,12 @@ chrome.runtime.onMessage.addListener(
                         this.tryCount++;
                         if (this.tryCount <= this.retryLimit) {
                             //try again
-                            console.log('Trying again...')
+
 
                             $.ajax(this);
                             return;
                         }
-                        console.log('Stoping trying...');
+
                         return
                     }
                 });
@@ -1599,11 +1579,11 @@ chrome.runtime.onMessage.addListener(
                             }
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
-                                console.log('Trying again...')
+
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
+
                             return true
                         };
                         return true
@@ -1613,12 +1593,12 @@ chrome.runtime.onMessage.addListener(
                         this.tryCount++;
                         if (this.tryCount <= this.retryLimit) {
                             //try again
-                            console.log('Trying again...')
+
 
                             $.ajax(this);
                             return;
                         }
-                        console.log('Stoping trying...');
+
                         return
                     }
                 });
@@ -1659,12 +1639,12 @@ chrome.runtime.onMessage.addListener(
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
                                 //try again
-                                console.log('Trying again...')
+
 
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
+
 
                             return true};
                         setLastUserPreferenceCrawlSuccessfullAttempt(CURRENT_USER_ID,'advertisers')
@@ -1674,12 +1654,12 @@ chrome.runtime.onMessage.addListener(
                         this.tryCount++;
                         if (this.tryCount <= this.retryLimit) {
                             //try again
-                            console.log('Trying again...')
+
 
                             $.ajax(this);
                             return;
                         }
-                        console.log('Stoping trying...');
+
                         return
                     }
 
@@ -1713,17 +1693,17 @@ chrome.runtime.onMessage.addListener(
                 if ((localStorage.collectPrefs!=='true') || (hasCurrentUserConsent(3)!=true)) {
                     return
                 }
-                var adDetail = request.data;
+                let adDetail = request.data;
 
                 if(ADACTIVITY == undefined || ADACTIVITY.adClickedData == undefined)
                     return;
 
-                var adKeys = Object.keys(ADACTIVITY.adClickedData);
+                let adKeys = Object.keys(ADACTIVITY.adClickedData);
                 if(adKeys.includes(adDetail.id) && request.user_id == ADACTIVITY.user_id){
                     ADACTIVITY.adClickedData[adDetail.id]['contents'] = adDetail.contents;
                     localStorage.adActivity = JSON.stringify(ADACTIVITY);
                 }
-                var isCrawling = false;
+                let isCrawling = false;
                 for(id of adKeys)
                 {
                     if(ADACTIVITY.adClickedData[id]['contents'] == undefined)
@@ -1764,12 +1744,12 @@ chrome.runtime.onMessage.addListener(
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
                                 //try again
-                                console.log('Trying again...')
+
 
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
+
                             return true
                         };
 
@@ -1779,12 +1759,12 @@ chrome.runtime.onMessage.addListener(
                         this.tryCount++;
                         if (this.tryCount <= this.retryLimit) {
                             //try again
-                            console.log('Trying again...')
+
 
                             $.ajax(this);
                             return;
                         }
-                        console.log('Stoping trying...');
+
                         return
                     }
 
@@ -1815,12 +1795,12 @@ chrome.runtime.onMessage.addListener(
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
                                 //try again
-                                console.log('Trying again...')
+
 
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
+
                             return true
                         };
 
@@ -1834,12 +1814,11 @@ chrome.runtime.onMessage.addListener(
                         this.tryCount++;
                         if (this.tryCount <= this.retryLimit) {
                             //try again
-                            console.log('Trying again...')
+
 
                             $.ajax(this);
                             return;
                         }
-                        console.log('Stoping trying...');
                         return
                     }
 
@@ -1893,11 +1872,9 @@ chrome.runtime.onMessage.addListener(
                                 }
                                 this.tryCount++;
                                 if (this.tryCount <= this.retryLimit) {
-                                    console.log('Trying again...')
                                     $.ajax(this);
                                     return;
                                 }
-                                console.log('Stoping trying...');
                                 return true
                             };
                             return true
@@ -1907,12 +1884,10 @@ chrome.runtime.onMessage.addListener(
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
                                 //try again
-                                console.log('Trying again...')
 
                                 $.ajax(this);
                                 return;
                             }
-                            console.log('Stoping trying...');
                             return
                         }
                     });

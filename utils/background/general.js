@@ -30,7 +30,6 @@
 
 var CURRENT_USER_ID = -1; //SAVING CURRENT USER ID OF USER THQT IS LOGGED IN
 var CURRENT_EMAIL = ''; //SAVING CURRENT EMAIL OF USER THAT IS LOGGED IN
-//var CURRENT_PHONE = ''; //SAVING CURRENT PHONE OF USER THAT IS LOGGED IN
 const REQUEST_TYPE = 'POST'; //ALL REQUESTS TO SERVER ARE POST REQUESTS
 const POPUPHTML = 'ui/popup.html?welcome=true'; //popup page to show once if a user has installed the tool but have not given consent
 //const MIN_TIMESTAMP_MESSAGE=1523875976; //users before this timestamp that still have the tool installed but have not given consent are being prompted a message
@@ -45,7 +44,7 @@ const POPUPHTML = 'ui/popup.html?welcome=true'; //popup page to show once if a u
  * @return {Boolean}       true if it is email else false
  */
 function isEmail(value) {
-  var input = document.createElement('input');
+  let input = document.createElement('input');
 
   input.type = 'email';
   input.required = true;
@@ -83,7 +82,7 @@ function genericRequestSuccess() {
  * @return {} 
  */
 function genericRequestError() {
-	console.log("Request failed");
+	debugLog("Request failed");
 	return;
 }
 
@@ -98,8 +97,8 @@ function genericRequestError() {
  * @return {object}            details object modified with the headers
  */
 function setHeaderKey(details,headerName,newVal) {
-    var gotIt = false;
-    for (var n in details.requestHeaders){
+    let gotIt = false;
+    for (let n in details.requestHeaders){
         gotIt = details.requestHeaders[n].name.toLowerCase()==headerName.toLowerCase();
 
         if (gotIt) {
@@ -124,7 +123,7 @@ function setHeaderKey(details,headerName,newVal) {
  */
 function isUserRequest(details) {
 
-    var initiator = details.initiator;
+    let initiator = details.initiator;
 
 
     if (initiator) {
@@ -133,7 +132,7 @@ function isUserRequest(details) {
 
 
 
-    var tabId = details.tabId;
+    let tabId = details.tabId;
 
     if ((tabId!=undefined) && (tabId!=-1)) {
         return true;
@@ -150,7 +149,7 @@ function isUserRequest(details) {
  * @return {number}     index of the element in the list
  */
 function getIndexFromList(txt,lst) {
-    var idx = -1;
+    let idx = -1;
     for (let i=0;i<lst.length;i++) {
         idx = txt.indexOf(lst[i]);
         if (idx>=0) {

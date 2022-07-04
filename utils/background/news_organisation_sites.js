@@ -26,13 +26,9 @@ function sendTabArticle(request){
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
                 //try again
-                console.log('Trying again...')
-
                 $.ajax(this);
                 return;
             }
-            console.log('Stoping trying...');
-            console.log('failure')
             return true
         };
 
@@ -42,12 +38,9 @@ function sendTabArticle(request){
         this.tryCount++;
         if (this.tryCount <= this.retryLimit) {
             //try again
-            console.log('Trying again...')
-
             $.ajax(this);
             return;
         }
-        console.log('Stoping trying...');
         return
     }
 });
@@ -107,10 +100,10 @@ function addToNewsQueue(tabData){
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
     if (changeInfo['status'] === 'complete'){
-        var _domain = url_domain(tab.url);
+        let _domain = url_domain(tab.url);
         if (isNewsDomain(_domain)){
             let tsNow = (new Date()).getTime();
-            var time_elapsed = [];
+            let time_elapsed = [];
             if (tab.active) {
                 time_elapsed.push({ 'start_ts': tsNow, 'end_ts': -1 });
             }
@@ -166,7 +159,7 @@ function checkBrowserFocus(){
         }
         else if (browser.focused === true && changedFocus === true){
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                var currTab = tabs[0];
+                let currTab = tabs[0];
                 if (currTab) {
                     setActiveTab(currTab.id);
                     if(Object.keys(NEWS_ARTICLES).includes(currTab.id.toString())){
@@ -208,7 +201,7 @@ chrome.tabs.onRemoved.addListener(function(tabId, changeInfo){
  * @return {string} domain
  */
 function url_domain(data) {
-    var a = document.createElement('a');
+    let a = document.createElement('a');
     a.href = data;
     return a.hostname.replace('www.', '');
 }

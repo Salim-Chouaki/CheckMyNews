@@ -39,30 +39,22 @@ var consentRequestedTime = null;
  *                               If mode is 0, any consent is suitable for the specific action.
  * @return {Boolean}      true if user has consent for specific mode else false
  */
-function hasCurrentUserConsent(consentMode) {
-    // there exist no current user
+function hasCurrentUserConsent(consentMode= 0) {
     if (isCurrentUser()!=true) {
         return false;
     }
-
-
-    // consents object does not exist
     if ((!localStorage[CURRENT_USER_ID+'consents']) || ((!localStorage[CURRENT_USER_ID+'consents']).length===0) || (localStorage[CURRENT_USER_ID+'consents']==='undefined') ) {
-        // TODO mark to ask for consent
         return false;
     }
 
+    let consents = JSON.parse(localStorage[CURRENT_USER_ID+'consents']);
 
-    var consents = JSON.parse(localStorage[CURRENT_USER_ID+'consents']);
-
-    // 0 is set on the server
     if (!consents[consentMode]) {
         return false;
     }
 
     return consents[consentMode];
 }
-
 
 
 
@@ -93,7 +85,7 @@ function getConsentFromServer(consentApiUrl,consentMode,onConsentPositive,onCons
         return;
     }
 
-    var dat = replaceUserIdEmail({user_id:CURRENT_USER_ID});
+    let dat = replaceUserIdEmail({user_id:CURRENT_USER_ID});
     $.ajax({
         url:consentApiUrl,
         type:REQUEST_TYPE,
@@ -163,7 +155,7 @@ function genericRequestNoConsent() {
         chrome.tabs.create({'url':chrome.extension.getURL("ui/new_consent.html")});
         consent_page_opened = false;
     }
-    window.setTimeout(function() {captureErrorBackground(getConsentFromServer, [URLS_SERVER.getConsent, 0, genericRequestSuccess, genericRequestNoConsent, genericRequestError], URLS_SERVER.registerError, undefined);},ONE_HOUR)
+    window.setTimeout(function() {captureErrorBackground(getConsentFromServer, [URLS_SERVER.getConsent, 0, executeAfterConsent, genericRequestNoConsent, genericRequestError], URLS_SERVER.registerError, undefined);},ONE_HOUR)
     return;
 }
 
@@ -184,9 +176,9 @@ function sendConsentStatusToComponents(consentApiUrl,sendResponse,consentMode=0)
         sendResponse({"consent":true, "currentUser" : sha512(String(CURRENT_USER_ID))});
         return true;
     }
-    var onConsentPositiveSendResponse = replyOnConsentPositive.bind(sendResponse);
-    var onConsentNegativeSendResponse = replyOnConsentNegative.bind(sendResponse);
-    var onConsentErrorSendResponse = replyOnConsentError.bind(sendResponse);
+    let onConsentPositiveSendResponse = replyOnConsentPositive.bind(sendResponse);
+    let onConsentNegativeSendResponse = replyOnConsentNegative.bind(sendResponse);
+    let onConsentErrorSendResponse = replyOnConsentError.bind(sendResponse);
     getConsentFromServer(consentApiUrl,consentMode,onConsentPositiveSendResponse,onConsentNegativeSendResponse,onConsentErrorSendResponse)
     return true;
 }
@@ -234,7 +226,6 @@ function openConsentWindow(resp) {
  */
 function openWindowToNewUsers(consentApiUrl,consentMode=0) {
 
-    //TODO: MODIFY FOR NEW CONSENT IF WE WANT TO INFORM OLD USERS
     if (isCurrentUser()!==true) {
         return;
     }
@@ -245,8 +236,6 @@ function openWindowToNewUsers(consentApiUrl,consentMode=0) {
     }
 
     getConsentFromServer(consentApiUrl,consentMode,genericRequestSuccess,openConsentWindow,genericRequestError)
-
-
 
 }
 
@@ -260,6 +249,7 @@ function replyOnSuccessInRegistration(consents,sendResponse) {
     if (sendResponse) {
         sendResponse({"ok":true,"consents":consents, "currentUser" :  sha512(String(CURRENT_USER_ID))});
         consentRequestedTime = null;
+        executeAfterConsent();
     }
 }
 
@@ -283,7 +273,7 @@ function replyOnFailureInRegistration(errorMsg,sendResponse) {
  *  Registers consent
  * @param {function} sendResponse
  */
-function registerConsent(registerConsentApiUrl,sendResponse=undefined,countEffort=3) {
+function registerConsent(registerConsentApiUrl,sendResponse=undefined, consentMode = 3, countEffort=3) {
 
     if (isCurrentUser()!==true) {
         return;
@@ -296,7 +286,7 @@ function registerConsent(registerConsentApiUrl,sendResponse=undefined,countEffor
     $.ajax({
         url: registerConsentApiUrl,
         type: REQUEST_TYPE,
-        data: replaceUserIdEmail({user_id: CURRENT_USER_ID,extension_version:getExtensionVersion()}),
+        data: replaceUserIdEmail({user_id: CURRENT_USER_ID,extension_version:getExtensionVersion(), consent_id : consentMode}),
         dataType: "json",
         traditional: true,
         success: function (resp) {
@@ -306,11 +296,9 @@ function registerConsent(registerConsentApiUrl,sendResponse=undefined,countEffor
 
             if (resp.consents) {
                 setConsents(resp.consents);
-
             }
 
             replyOnSuccessInRegistration(resp.consents,sendResponse);
-
             return true;
         },
         error: function () {
@@ -322,7 +310,6 @@ function registerConsent(registerConsentApiUrl,sendResponse=undefined,countEffor
         }
     });
 
-    sendExtensionNameAndVersion();
       return true
 }
 

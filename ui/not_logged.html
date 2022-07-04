@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8" />
 
-	<title>Social Media Monitor</title>
+	<title>__MSG_appName__</title>
 	<meta name="description" content="Social Media Monitor" />
 	<meta name="author" content="Social Media Monitor" />
 	<script src="../third-party/jquery-3.1.1.min.js"></script>
@@ -36,23 +36,27 @@
 
 
 <div class="container">
-	<h1><img src="../media/enabled.png" alt="logo" height="50" /> Social Media Monitor</h1>
+	<h1><img src="../media/enabled.png" alt="logo" height="50" /> __MSG_appName__ </h1>
 	<div class="jumbotron">
-		<h3 style="margin-bottom: 30px;"> You are not logged into your Facebook account</h3>
+		<h3 style="margin-bottom: 30px;"> __MSG_notLoggedInMessage__ </h3>
 
 		<div class="alert alert-danger" style="font-size: 25px">
-			You need to have a Facebook account to install the tool. Please sign in Facebook first. Once you are logged-in a new tab will open with the survey.
+			__MSG_pleaseLogInMessage__
 		</div>
 
 
 		<div class="row" >
 			<div class="col-md-12 text-right" style="margin:10px;">
-				<a class="link_button" href="https://www.facebook.com" target="_blank">Go to Facebook</a>
+				<a class="link_button" href="https://www.facebook.com"> __MSG_goToFacebook__ </a>
 			</div>
 		</div>
 	</div>
 
 
+
 </div>
+
+<script src="localize.js"></script>
+
 </body>
 </html>
